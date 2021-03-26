@@ -49,10 +49,21 @@ class AuthService {
       UserCredential result = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User user = result.user;
+
       // create a new document for the user with the uid
       await DatabaseService(uid: user.uid)
           .updateUserData('0', 'new crew member', 100);
       return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+  // reset password
+  Future resetPassword(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
     } catch (e) {
       print(e.toString());
       return null;

@@ -22,7 +22,7 @@ class _RegisterState extends State<Register> {
   String email = "";
   String password = "";
   String error = '';
-
+  String pass2 = '';
   @override
   Widget build(BuildContext context) {
     return loading
@@ -70,7 +70,23 @@ class _RegisterState extends State<Register> {
                           : null,
                       obscureText: true,
                       onChanged: (val) {
-                        setState(() => password = val);
+                        setState(() => pass2 = val);
+                      },
+                    ),
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    TextFormField(
+                      decoration: textInputDecoration.copyWith(
+                          hintText: 'Repeat password'),
+                      validator: (val) => val.length < 6
+                          ? 'Enter a password 6+ chars long'
+                          : null,
+                      obscureText: true,
+                      onChanged: (val) {
+                        setState(() {
+                          password = val;
+                        });
                       },
                     ),
                     SizedBox(
@@ -83,7 +99,8 @@ class _RegisterState extends State<Register> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () async {
-                        if (_formKey.currentState.validate()) {
+                        if (_formKey.currentState.validate() &&
+                            pass2 == password) {
                           setState(() {
                             loading = true;
                           });
@@ -94,6 +111,10 @@ class _RegisterState extends State<Register> {
                                 () => error = 'please suply a valid email');
                             loading = false;
                           }
+                        } else {
+                          setState(() {
+                            error = 'passwords do not match';
+                          });
                         }
                       },
                     ),

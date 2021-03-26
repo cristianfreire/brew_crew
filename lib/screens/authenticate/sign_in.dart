@@ -1,6 +1,7 @@
 import 'dart:isolate';
 
 import 'package:brew_crew/screens/authenticate/register.dart';
+import 'package:brew_crew/screens/authenticate/reset_password.dart';
 import 'package:brew_crew/services/auth.dart';
 import 'package:brew_crew/shared/constants.dart';
 import 'package:brew_crew/shared/loading.dart';
@@ -77,6 +78,17 @@ class _SignInState extends State<SignIn> {
                     SizedBox(
                       height: 20.0,
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                          child: Text('Forgot Password?'),
+                          onPressed: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => ResetScreen())),
+                        ),
+                      ],
+                    ),
                     RaisedButton(
                       color: Colors.pink[400],
                       child: Text(
@@ -106,7 +118,7 @@ class _SignInState extends State<SignIn> {
                     Text(
                       error,
                       style: TextStyle(color: Colors.red, fontSize: 14.0),
-                    )
+                    ),
                   ],
                 ),
               ),
